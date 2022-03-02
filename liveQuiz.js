@@ -1,6 +1,6 @@
 module.exports = function(io) {
   const nsp = io.of("/liveQuiz");
-  let gameControlID = null;
+  let gameID = null;
   let openTicker = null;
   let openChat = null;
   let questionPlayNo = 0;
@@ -9,7 +9,7 @@ module.exports = function(io) {
   let openAnswer = 0;
   let youtubeID = "";
   let msg = null;
-  let gameStatus = "H";
+  let gameStatus = null;
   let gameStartDate = null;
   let questionData = {};
   let questionViewNo = 0;
@@ -31,7 +31,7 @@ module.exports = function(io) {
     console.log('Connected');
     console.log(connectCounter);
 
-  
+ 
 
     socket.on("setOpenAnswer", function(q_no) {
       openAnswer = q_no;
@@ -57,9 +57,9 @@ module.exports = function(io) {
 
 
            socket.on("setGameControlID", function(val) {
-          gameControlID = val;
-          nsp.emit("gameControlID", {
-            gameControlID,
+         gameID = val;
+          nsp.emit("gameID", {
+            gameID,
           });
         });
 
@@ -267,7 +267,7 @@ module.exports = function(io) {
 
     socket.on("startBrowser", function(val) {
       nsp.emit("getStart", {
-        gameControlID:gameControlID,
+        gameID:gameID,
         openTicker: openTicker,
         openChat: openChat,
         questionStatus: questionStatus,
